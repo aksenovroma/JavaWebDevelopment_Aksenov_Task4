@@ -1,12 +1,12 @@
 package by.epam.javatraining.aksenov.task4.controller;
 
-import by.epam.javatraining.aksenov.task4.model.entity.Paragraph;
-import by.epam.javatraining.aksenov.task4.model.entity.Sentence;
-import by.epam.javatraining.aksenov.task4.model.entity.SyntaxItem;
-import by.epam.javatraining.aksenov.task4.model.entity.Text;
+import by.epam.javatraining.aksenov.task4.model.noname.CompositeItem;
+import by.epam.javatraining.aksenov.task4.model.noname.ItemType;
+import by.epam.javatraining.aksenov.task4.model.noname.SyntaxItem;
 import by.epam.javatraining.aksenov.task4.util.DataReader;
 import by.epam.javatraining.aksenov.task4.util.EmptyFileException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -14,15 +14,13 @@ public class Main {
 
         String file = null;
         try {
-            file = DataReader.readFile("input/textExample.txt");
+            file = DataReader.readFile("input/textExample1.txt");
         } catch (EmptyFileException e) {
             e.printStackTrace();
         }
 
-        Text text = new Text(file);
-        for (String str : text.getCodeBloks()) {
-            System.out.println(str);
-        }
+        CompositeItem text = new CompositeItem(file, ItemType.TEXT);
 
+        System.out.println(text);
     }
 }

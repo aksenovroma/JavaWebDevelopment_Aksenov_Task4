@@ -1,16 +1,5 @@
-Autoboxing and Unboxing
-
-Autoboxing is the automatic conversion that the Java compiler makes between the primitive types
-and their corresponding object wrapper classes. For example, converting an int to an Integer , a
-double to a Double , and so on. If the conversion goes the other way, this is called unboxing.
-Here is the simplest example of autoboxing:
+Autoboxing and Unboxing. Autoboxing is the automatic conversion.
 
 Character ch = 'a';
 
-The rest of the examples in this section use generics. If you are not yet familiar with the syntax of
-generics, see the Generics (Updated) lesson.
-Consider the following code:
-
-List<Integer> li = new ArrayList<>();
-for (int i = 1; i < 50; i += 2)
-li.add(i);
+The rest of the examples in this section use generics. If you.
