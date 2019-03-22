@@ -1,4 +1,4 @@
-package by.epam.javatraining.aksenov.task4.util;
+package by.epam.javatraining.aksenov.task4.util.exception;
 
 public class EmptyFileException extends Exception {
 

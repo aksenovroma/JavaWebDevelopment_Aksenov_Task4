@@ -1,4 +1,4 @@
-package by.epam.javatraining.aksenov.task4.model.logic;
+package by.epam.javatraining.aksenov.task4.util;
 
 import java.util.regex.Pattern;
 

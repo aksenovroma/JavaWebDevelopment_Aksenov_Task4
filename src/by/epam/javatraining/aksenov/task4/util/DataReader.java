@@ -1,5 +1,6 @@
 package by.epam.javatraining.aksenov.task4.util;
 
+import by.epam.javatraining.aksenov.task4.util.exception.EmptyFileException;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;

@@ -1,26 +1,33 @@
 package by.epam.javatraining.aksenov.task4.controller;
 
-import by.epam.javatraining.aksenov.task4.model.noname.CompositeItem;
-import by.epam.javatraining.aksenov.task4.model.noname.ItemType;
-import by.epam.javatraining.aksenov.task4.model.noname.SyntaxItem;
+import by.epam.javatraining.aksenov.task4.model.entity.CompositeItem;
+import by.epam.javatraining.aksenov.task4.model.entity.ItemType;
 import by.epam.javatraining.aksenov.task4.util.DataReader;
-import by.epam.javatraining.aksenov.task4.util.EmptyFileException;
-
-import java.util.ArrayList;
-import java.util.List;
+import by.epam.javatraining.aksenov.task4.util.PrinterCreator;
+import by.epam.javatraining.aksenov.task4.util.UserPrinter;
+import by.epam.javatraining.aksenov.task4.util.exception.EmptyFileException;
+import by.epam.javatraining.aksenov.task4.view.Printable;
+import by.epam.javatraining.aksenov.task4.view.PrinterType;
+import org.apache.log4j.Logger;
 
 public class Main {
+    private static Logger log = Logger.getRootLogger();
+    private static final String INPUT_FILE = "input/textExample1.txt";
+    private static final String OUTPUT_FILE = "output/outputFile.txt";
+
     public static void main(String[] args) {
+        PrinterType printerType = UserPrinter.select(OUTPUT_FILE);
+        Printable printer = PrinterCreator.create(printerType);
 
         String file = null;
         try {
-            file = DataReader.readFile("input/textExample1.txt");
+            file = DataReader.readFile(INPUT_FILE);
         } catch (EmptyFileException e) {
-            e.printStackTrace();
+            log.error(e);
         }
 
         CompositeItem text = new CompositeItem(file, ItemType.TEXT);
 
-        System.out.println(text);
+        printer.print(text);
     }
 }

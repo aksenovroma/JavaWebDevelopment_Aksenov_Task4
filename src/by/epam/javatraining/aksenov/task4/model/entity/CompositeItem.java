@@ -1,10 +1,9 @@
-package by.epam.javatraining.aksenov.task4.model.noname;
+package by.epam.javatraining.aksenov.task4.model.entity;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class CompositeItem implements SyntaxItem{
+public class CompositeItem {
     public static final String REGEX_FOR_PARAGRAPH;
     public static final String REGEX_FOR_SENTENCES;
     public static final String REGEX_FOR_SENTENCE_ITEMS;
@@ -18,7 +17,7 @@ public class CompositeItem implements SyntaxItem{
 
     private String text;
     private ItemType itemType;
-    private List<SyntaxItem> items = new ArrayList<>();
+    private List<CompositeItem> items = new ArrayList<>();
 
     public CompositeItem(String text, ItemType itemType) {
         this.text = text;
@@ -34,19 +33,19 @@ public class CompositeItem implements SyntaxItem{
         return itemType;
     }
 
-    public void removeItem(SyntaxItem syntaxItem) {
+    public void removeItem(CompositeItem syntaxItem) {
         items.remove(syntaxItem);
     }
 
-    public void addItem(SyntaxItem syntaxItem) {
+    public void addItem(CompositeItem syntaxItem) {
         items.add(syntaxItem);
     }
 
-    public SyntaxItem getItem(int index) {
+    public CompositeItem getItem(int index) {
         return items.get(index);
     }
 
-    public List<SyntaxItem> get() {
+    public List<CompositeItem> get() {
         return items;
     }
 
@@ -68,8 +67,12 @@ public class CompositeItem implements SyntaxItem{
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        for (SyntaxItem sI : items) {
-            sb.append(sI.toString());
+        for (CompositeItem sI : items) {
+            if (sI.getItemType() == ItemType.WORD) {
+                sb.append(sI.getText()).append(" ");
+            } else if (sI.getItemType() == ItemType.PUNCTUATION) {
+                sb.append(sI.getText());
+            }
         }
 
         return sb.toString();
