@@ -8,8 +8,14 @@ import org.apache.log4j.Logger;
 public class ParagraphSeparator implements Separator{
     private static final Logger log = Logger.getRootLogger();
 
+    public static final String REGEX_FOR_SENTENCES;
+
+    static {
+        REGEX_FOR_SENTENCES = "(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?|\\!|:)\\s";
+    }
+
     public void separate(CompositeItem compositeItem) {
-        String[] sentencesArr = Parser.parse(compositeItem.getText(), CompositeItem.REGEX_FOR_SENTENCES);
+        String[] sentencesArr = Parser.parse(compositeItem.getText(), REGEX_FOR_SENTENCES);
         SentenceSeparator sentenceSeparator = new SentenceSeparator();
 
         for (String sentence : sentencesArr) {

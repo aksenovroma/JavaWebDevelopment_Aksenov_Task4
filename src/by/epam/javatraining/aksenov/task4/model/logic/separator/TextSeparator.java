@@ -7,11 +7,17 @@ import by.epam.javatraining.aksenov.task4.model.entity.SimpleItem;
 import by.epam.javatraining.aksenov.task4.util.Parser;
 import org.apache.log4j.Logger;
 
-public class TextSeparator implements Separator{
+public class TextSeparator implements Separator {
     private static final Logger log = Logger.getRootLogger();
 
+    public static final String REGEX_FOR_PARAGRAPH;
+
+    static {
+        REGEX_FOR_PARAGRAPH = "\\n{2,}";
+    }
+
     public void separate(CompositeItem compositeItem) {
-        String[] paragraphsArr = Parser.parse(compositeItem.getText(), CompositeItem.REGEX_FOR_PARAGRAPH);
+        String[] paragraphsArr = Parser.parse(compositeItem.getText(), REGEX_FOR_PARAGRAPH);
         ParagraphSeparator paragraphSeparator = new ParagraphSeparator();
 
         for (String paragraph : paragraphsArr) {

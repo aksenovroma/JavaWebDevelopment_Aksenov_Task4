@@ -1,6 +1,8 @@
 package by.epam.javatraining.aksenov.task4.model.entity;
 
-public interface Item {
+import java.io.Serializable;
+
+public interface Item extends Serializable {
     String getText();
 
     ItemType getItemType();

@@ -12,12 +12,21 @@ import java.util.regex.Pattern;
 public class SentenceSeparator implements Separator {
     private static final Logger log = Logger.getRootLogger();
 
-    public static final String REGEX_FOR_PUNCTUATION = "\\p{Punct}";
-    public static final String REGEX_FOR_SPACE_1 = "";
-    public static final String REGEX_FOR_SPACE_2 = " ";
+    public static final String REGEX_FOR_PUNCTUATION;
+    public static final String REGEX_FOR_SPACE_1;
+    public static final String REGEX_FOR_SPACE_2;
+    public static final String REGEX_FOR_SENTENCE_ITEMS;
+
+    static {
+        REGEX_FOR_SENTENCE_ITEMS = "(?<=[\\s])|(?<=[\\p{Punct}&&[^']])(?!\\s)|(?=[\\p{Punct}&&[^']])(?<!\\s)"
+                + "|(?<=[\\s\\p{Punct}]['])(?!\\s)|(?=['][\\s\\p{Punct}])(?<!\\s)|([\\s])";
+        REGEX_FOR_PUNCTUATION = "\\p{Punct}";
+        REGEX_FOR_SPACE_1 = "";
+        REGEX_FOR_SPACE_2 = " ";
+    }
 
     public void separate(CompositeItem compositeItem) {
-        String[] sentenceItemArr = Parser.parse(compositeItem.getText(), CompositeItem.REGEX_FOR_SENTENCE_ITEMS);
+        String[] sentenceItemArr = Parser.parse(compositeItem.getText(), REGEX_FOR_SENTENCE_ITEMS);
 
         for (String sentItem : sentenceItemArr) {
             Item item;
