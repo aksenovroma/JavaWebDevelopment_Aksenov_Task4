@@ -9,6 +9,6 @@ public class Parser {
     }
 
     public static boolean isCodeBlock(String text) {
-        return text.contains("(") && text.contains(";") && text.contains(")");
+        return text.contains("(") || text.contains(";") || text.contains(")");
     }
 }

@@ -1,77 +1,83 @@
 package by.epam.javatraining.aksenov.task4.model.entity;
 
+import by.epam.javatraining.aksenov.task4.model.logic.separator.Separator;
+import by.epam.javatraining.aksenov.task4.model.logic.separator.TextSeparator;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class CompositeItem {
+public class CompositeItem implements Item {
     public static final String REGEX_FOR_PARAGRAPH;
     public static final String REGEX_FOR_SENTENCES;
     public static final String REGEX_FOR_SENTENCE_ITEMS;
 
     static {
-        REGEX_FOR_PARAGRAPH = "\\n+";
-        REGEX_FOR_SENTENCES = "(?<=[a-z])\\.\\s+";
-        REGEX_FOR_SENTENCE_ITEMS = "\\s+|(?<=[\\p{Punct}&&[^']])(?!\\s)|(?=[\\p{Punct}&&[^']])(?<!\\s)"
+        REGEX_FOR_PARAGRAPH = "\\n{2,}";
+        REGEX_FOR_SENTENCES = "(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?|\\!|:)\\s";
+        REGEX_FOR_SENTENCE_ITEMS = "(?<=[\\s+])|(?<=[\\p{Punct}&&[^']])(?!\\s)|(?=[\\p{Punct}&&[^']])(?<!\\s)"
                 + "|(?<=[\\s\\p{Punct}]['])(?!\\s)|(?=['][\\s\\p{Punct}])(?<!\\s)";
     }
 
     private String text;
     private ItemType itemType;
-    private List<CompositeItem> items = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 
     public CompositeItem(String text, ItemType itemType) {
         this.text = text;
         this.itemType = itemType;
-        parse();
     }
 
+    @Override
     public String getText() {
         return text;
     }
 
+    @Override
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    @Override
     public ItemType getItemType() {
         return itemType;
     }
 
-    public void removeItem(CompositeItem syntaxItem) {
+    public void removeItem(Item syntaxItem) {
         items.remove(syntaxItem);
     }
 
-    public void addItem(CompositeItem syntaxItem) {
+    public void addItem(Item syntaxItem) {
         items.add(syntaxItem);
     }
 
-    public CompositeItem getItem(int index) {
+    public Item getItem(int index) {
         return items.get(index);
     }
 
-    public List<CompositeItem> get() {
+    public List<Item> get() {
         return items;
     }
 
     public void parse() {
-        switch (itemType) {
-            case TEXT: {
-                items = itemType.separateText(text, REGEX_FOR_PARAGRAPH);
-            }
-            case PARAGRAPH: {
-                items = itemType.separateParagraph(text, REGEX_FOR_SENTENCES);
-            }
-            case SENTENCE: {
-                items = itemType.separateSentence(text, REGEX_FOR_SENTENCE_ITEMS);
-            }
-        }
+        new TextSeparator().separate(this);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        for (CompositeItem sI : items) {
-            if (sI.getItemType() == ItemType.WORD) {
-                sb.append(sI.getText()).append(" ");
-            } else if (sI.getItemType() == ItemType.PUNCTUATION) {
-                sb.append(sI.getText());
+        for (Item c : items) {
+            if (c instanceof CompositeItem || c.getItemType() == ItemType.CODE_BLOCK) {
+                if ((c.getItemType() == ItemType.PARAGRAPH || c.getItemType() == ItemType.CODE_BLOCK)) {
+                    sb.append(c.toString()).append("\n\n");
+                } else {
+                    sb.append(c.toString()).append(" ");
+                }
+            }
+            else {
+                sb.append(c.toString());
             }
         }
 

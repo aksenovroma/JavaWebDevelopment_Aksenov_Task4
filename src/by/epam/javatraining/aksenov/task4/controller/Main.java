@@ -19,15 +19,17 @@ public class Main {
         PrinterType printerType = UserPrinter.select(OUTPUT_FILE);
         Printable printer = PrinterCreator.create(printerType);
 
-        String file = null;
+        String textFromFile = null;
+
         try {
-            file = DataReader.readFile(INPUT_FILE);
+            textFromFile = DataReader.readFile(INPUT_FILE);
         } catch (EmptyFileException e) {
             log.error(e);
         }
 
-        CompositeItem text = new CompositeItem(file, ItemType.TEXT);
+        CompositeItem text = new CompositeItem(textFromFile, ItemType.TEXT);
+        text.parse();
+        System.out.println(text.toString());
 
-        printer.print(text);
     }
 }
