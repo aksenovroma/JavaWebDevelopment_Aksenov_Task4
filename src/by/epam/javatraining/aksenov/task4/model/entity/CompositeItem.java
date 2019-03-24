@@ -1,11 +1,8 @@
 package by.epam.javatraining.aksenov.task4.model.entity;
 
-import by.epam.javatraining.aksenov.task4.model.logic.separator.Separator;
 import by.epam.javatraining.aksenov.task4.model.logic.separator.TextSeparator;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 public class CompositeItem implements Item {
@@ -16,8 +13,8 @@ public class CompositeItem implements Item {
     static {
         REGEX_FOR_PARAGRAPH = "\\n{2,}";
         REGEX_FOR_SENTENCES = "(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?|\\!|:)\\s";
-        REGEX_FOR_SENTENCE_ITEMS = "(?<=[\\s+])|(?<=[\\p{Punct}&&[^']])(?!\\s)|(?=[\\p{Punct}&&[^']])(?<!\\s)"
-                + "|(?<=[\\s\\p{Punct}]['])(?!\\s)|(?=['][\\s\\p{Punct}])(?<!\\s)";
+        REGEX_FOR_SENTENCE_ITEMS = "(?<=[\\s])|(?<=[\\p{Punct}&&[^']])(?!\\s)|(?=[\\p{Punct}&&[^']])(?<!\\s)"
+                + "|(?<=[\\s\\p{Punct}]['])(?!\\s)|(?=['][\\s\\p{Punct}])(?<!\\s)|([\\s])";
     }
 
     private String text;
