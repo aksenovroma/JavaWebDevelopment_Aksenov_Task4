@@ -1,6 +1,7 @@
 package by.epam.javatraining.aksenov.task4.controller;
 
 import by.epam.javatraining.aksenov.task4.model.entity.CompositeItem;
+import by.epam.javatraining.aksenov.task4.model.logic.TextHandler;
 import by.epam.javatraining.aksenov.task4.util.DataReader;
 import by.epam.javatraining.aksenov.task4.util.PrinterCreator;
 import by.epam.javatraining.aksenov.task4.util.UserPrinter;
@@ -28,7 +29,19 @@ public class Main {
         }
 
         CompositeItem text = new CompositeItem(textFromFile);
+        CompositeItem textCopy1 = (CompositeItem) TextHandler.clone(text);
+        CompositeItem textCopy2 = (CompositeItem) TextHandler.clone(text);
+        CompositeItem textCopy3 = (CompositeItem) TextHandler.clone(text);
+
         printer.print(text);
 
+        TextHandler.swapFirstLastWordInAllSentence(textCopy1);
+        printer.print(textCopy1);
+
+        TextHandler.removeWordsWithFirstVowel(textCopy2, 5);
+        printer.print(textCopy2);
+
+        TextHandler.reverseAllSentences(textCopy3);
+        printer.print(textCopy3);
     }
 }
