@@ -4,6 +4,12 @@ import by.epam.javatraining.aksenov.task4.model.exception.logic.SimpleItemWrongT
 
 import java.util.Objects;
 
+/**
+ * @author aksenov
+ * @version 2.0
+ * @date 23.03.2019
+ */
+
 public class SimpleItem implements Item {
     public static final String DEFAULT_TEXT = "";
     public static final ItemType DEFAULT_ITEM_TYPE = ItemType.SPACE;
@@ -43,14 +49,9 @@ public class SimpleItem implements Item {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         SimpleItem that = (SimpleItem) o;
-
         return Objects.equals(text, that.text) &&
                 itemType == that.itemType;
     }

@@ -11,6 +11,21 @@ import by.epam.javatraining.aksenov.task4.view.PrinterType;
 import org.apache.log4j.Logger;
 
 
+/**
+ * C using the OOP methodology and the architectural design template
+ * MVC needs to be designed and implemented in a programming language.
+ * Java software system that analyzes and parses text from
+ *
+ * programming tutorial as well as provide additional
+ *
+ * operations in accordance with its own variant of the task
+ * brothers alone, but not less than two).
+ *
+ * @author aksenov
+ * @version 1.0
+ * @date 25.03.2019
+ */
+
 public class Main {
     private static Logger log = Logger.getRootLogger();
 

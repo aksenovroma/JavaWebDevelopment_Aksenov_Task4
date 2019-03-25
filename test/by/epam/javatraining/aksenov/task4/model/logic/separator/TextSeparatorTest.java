@@ -7,11 +7,11 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class TextSeparatorTest {
-    public static String text1 = "Autoboxing is the automatic conversion.\n\n" +
-            "If you.\n\n";
 
     @Test
     public void testSeparator() {
+        String text1 = "Autoboxing is the automatic conversion.\n\n" +
+                "If you.\n\n";
         CompositeItem text = new CompositeItem(text1);
         StringBuilder sb = new StringBuilder();
 

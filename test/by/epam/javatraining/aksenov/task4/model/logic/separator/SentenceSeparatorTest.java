@@ -7,10 +7,10 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 
 public class SentenceSeparatorTest {
-    public static String text1 = "Autoboxing,    is the automatic conversion.\n\n";
 
     @Test
     public void testSeparator() {
+        String text1 = "Autoboxing,    is the automatic conversion.\n\n";
         CompositeItem text = new CompositeItem(text1);
         StringBuilder sb = new StringBuilder();
 

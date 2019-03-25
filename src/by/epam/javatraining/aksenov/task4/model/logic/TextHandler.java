@@ -11,6 +11,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * @author aksenov
+ * @version 1.0
+ * @date 25.03.2019
+ */
 
 public class TextHandler {
     private static Logger log = Logger.getRootLogger();

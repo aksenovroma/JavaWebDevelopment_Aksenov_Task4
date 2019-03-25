@@ -5,6 +5,12 @@ import by.epam.javatraining.aksenov.task4.model.entity.ItemType;
 import by.epam.javatraining.aksenov.task4.model.logic.Parser;
 import org.apache.log4j.Logger;
 
+/**
+ * @author aksenov
+ * @version 1.0
+ * @date 24.03.2019
+ */
+
 public class ParagraphSeparator implements Separator{
     private static final Logger log = Logger.getRootLogger();
 

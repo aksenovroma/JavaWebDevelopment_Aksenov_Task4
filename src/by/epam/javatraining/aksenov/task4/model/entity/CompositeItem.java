@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * @author aksenov
+ * @version 2.0
+ * @date 23.03.2019
+ */
+
 public class CompositeItem implements Item {
     public static final String SEPARATOR_FOR_PARAGRAPH;
     public static final String SEPARATOR_FOR_SENTENCE;
