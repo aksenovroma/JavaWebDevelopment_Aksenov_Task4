@@ -10,6 +10,7 @@ import by.epam.javatraining.aksenov.task4.view.Printable;
 import by.epam.javatraining.aksenov.task4.view.PrinterType;
 import org.apache.log4j.Logger;
 
+
 public class Main {
     private static Logger log = Logger.getRootLogger();
 
