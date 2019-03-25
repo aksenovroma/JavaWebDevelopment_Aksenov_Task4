@@ -3,7 +3,7 @@ package by.epam.javatraining.aksenov.task4.model.logic;
 import by.epam.javatraining.aksenov.task4.model.entity.CompositeItem;
 import by.epam.javatraining.aksenov.task4.model.entity.Item;
 import by.epam.javatraining.aksenov.task4.model.entity.ItemType;
-import by.epam.javatraining.aksenov.task4.util.Parser;
+import by.epam.javatraining.aksenov.task4.model.exception.logic.WrongArgumentException;
 import org.apache.log4j.Logger;
 
 import java.io.*;
@@ -11,26 +11,32 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import static by.epam.javatraining.aksenov.task4.util.Parser.isCodeBlock;
 
 public class TextHandler {
     private static Logger log = Logger.getRootLogger();
 
-    /*6)В каждом предложении текста поменять местами первое слово с последним,
-    не изменяя длины предложения.*/
+    public static final String REGEX_FOR_CODE_BLOCK = "";
+    public static final String VOWELS = "AEIOUaeiou";
+
+    /*6)In each sentence of the text swap the first word with the last,
+     without changing the length of the sentence.*/
 
     public static void swapFirstLastWordInAllSentence(CompositeItem item) {
         if (item != null) {
             for (Item paragraph : item.get()) {
-                if (paragraph != null && !(Parser.isCodeBlock(paragraph.getText()))) {
+                if (paragraph != null && !(isCodeBlock(paragraph.getText()))) {
                     for (Item sentence : ((CompositeItem) paragraph).get()) {
                         if (sentence != null) {
                             Item firstWord = ((CompositeItem) sentence).getItem(indexOfFirstWord(sentence));
                             Item lastWord = ((CompositeItem) sentence).getItem(indexOfLastWord(sentence));
 
                             String temp = firstWord.getText();
-                            firstWord.setText(lastWord.getText());
-                            lastWord.setText(temp);
+                            try {
+                                firstWord.setText(lastWord.getText());
+                                lastWord.setText(temp);
+                            } catch (WrongArgumentException e) {
+                                log.error(e);
+                            }
                         }
                     }
                 }
@@ -39,8 +45,8 @@ public class TextHandler {
         log.info("method swapFirstLastWordInAllSentence - completed");
     }
 
-    /*13)Из текста удалить все слова заданной длины, начинающиеся на согласную
-    букву.*/
+    /*13)Delete all words of a given length starting with a consonant from the text.
+     the letter.*/
 
     public static void removeWordsWithFirstVowel(CompositeItem item, int length) {
         if (item != null) {
@@ -66,13 +72,13 @@ public class TextHandler {
         log.info("method removeWordsWithFirstVowel - completed");
     }
 
-    /*20)Реверсировать (переставить предложение задом наперёд) все предложения
-    текста.*/
+    /*20)Reverse (rearrange the proposal back to front) all offers
+     text.*/
 
     public static void reverseAllSentences(CompositeItem item) {
         if (item != null) {
             for (Item paragraph : item.get()) {
-                if (paragraph != null && !(Parser.isCodeBlock(paragraph.getText()))) {
+                if (paragraph != null && !(isCodeBlock(paragraph.getText()))) {
                     for (Item sentence : ((CompositeItem) paragraph).get()) {
                         if (sentence != null) {
                             Collections.reverse(((CompositeItem) sentence).get());
@@ -80,7 +86,11 @@ public class TextHandler {
                             for (Item sentenceItem : ((CompositeItem) sentence).get()) {
                                 String reversedText = new StringBuilder(sentenceItem.getText()).reverse().toString();
 
-                                sentenceItem.setText(reversedText);
+                                try {
+                                    sentenceItem.setText(reversedText);
+                                } catch (WrongArgumentException e) {
+                                    log.error(e);
+                                }
                             }
                         }
                     }
@@ -91,57 +101,68 @@ public class TextHandler {
     }
 
     public static Item clone(Item item) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        try (ObjectOutputStream ous = new ObjectOutputStream(baos)) {
-            ous.writeObject(item);
-        } catch (IOException e) {
-            log.error(e);
-        }
-
         Item copyItem = null;
 
-        try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()))) {
-            copyItem = (Item) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            log.error(e);
-        }
+        if (item != null) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
+            try (ObjectOutputStream ous = new ObjectOutputStream(baos)) {
+                ous.writeObject(item);
+            } catch (IOException e) {
+                log.error(e);
+            }
+
+            try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()))) {
+                copyItem = (Item) ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                log.error(e);
+            }
+        }
         return copyItem;
     }
 
     public static int indexOfFirstWord(Item sentence) {
-        List<Item> itemList = ((CompositeItem) sentence).get();
+        if (sentence != null) {
+            List<Item> itemList = ((CompositeItem) sentence).get();
 
-        for (Item sentenceItem : itemList) {
-            if (sentenceItem.getItemType() == ItemType.WORD) {
-                return itemList.indexOf(sentenceItem);
+            for (Item sentenceItem : itemList) {
+                if (sentenceItem.getItemType() == ItemType.WORD) {
+                    return itemList.indexOf(sentenceItem);
+                }
             }
         }
         return -1;
     }
 
     public static int indexOfLastWord(Item sentence) {
-        List<Item> itemList = ((CompositeItem) sentence).get();
+        if (sentence != null) {
+            List<Item> itemList = ((CompositeItem) sentence).get();
 
-        for (int i = itemList.size() - 1; i >= 0; i--) {
-            if (itemList.get(i).getItemType() == ItemType.WORD) {
-                return i;
+            for (int i = itemList.size() - 1; i >= 0; i--) {
+                if (itemList.get(i).getItemType() == ItemType.WORD) {
+                    return i;
+                }
             }
         }
         return -1;
     }
 
     public static boolean isSuitableWord(Item item, int length) {
-        String word = item.getText();
-
-        if (word.length() == length && isVowel(word.charAt(0))) {
-            return true;
+        if (item != null) {
+            String word = item.getText();
+            return word.length() == length && isVowel(word.charAt(0));
         }
         return false;
     }
 
     public static boolean isVowel(char c) {
-        return "AEIOUaeiou".indexOf(c) != -1;
+        return VOWELS.indexOf(c) != -1;
+    }
+
+    public static boolean isCodeBlock(String text) {
+        if (text != null) {
+            return text.contains(";") && text.contains("=");
+        }
+        return false;
     }
 }

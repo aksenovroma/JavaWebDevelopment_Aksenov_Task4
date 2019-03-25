@@ -1,16 +1,24 @@
 package by.epam.javatraining.aksenov.task4.model.entity;
 
+import by.epam.javatraining.aksenov.task4.model.exception.logic.SimpleItemWrongTextException;
+
 import java.util.Objects;
 
 public class SimpleItem implements Item {
-    private String text = "";
-    private ItemType itemType = ItemType.SPACE;
+    public static final String DEFAULT_TEXT = "";
+    public static final ItemType DEFAULT_ITEM_TYPE = ItemType.SPACE;
+
+    private String text = DEFAULT_TEXT;
+    private ItemType itemType = DEFAULT_ITEM_TYPE;
 
     public SimpleItem(String text, ItemType itemType) {
         if (text != null) {
             this.text = text;
         }
-        if (itemType == ItemType.SPACE || itemType == ItemType.WORD || itemType == ItemType.PUNCTUATION) {
+        if (itemType == ItemType.SPACE
+                || itemType == ItemType.WORD
+                || itemType == ItemType.PUNCTUATION
+                || itemType == ItemType.CODE_BLOCK) {
             this.itemType = itemType;
         }
     }
@@ -26,9 +34,9 @@ public class SimpleItem implements Item {
     }
 
     @Override
-    public void setText(String text) {
+    public void setText(String text) throws SimpleItemWrongTextException {
         if (text == null) {
-
+            throw new SimpleItemWrongTextException();
         }
         this.text = text;
     }

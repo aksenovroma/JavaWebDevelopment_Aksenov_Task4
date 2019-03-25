@@ -4,7 +4,8 @@ import by.epam.javatraining.aksenov.task4.model.entity.CompositeItem;
 import by.epam.javatraining.aksenov.task4.model.entity.Item;
 import by.epam.javatraining.aksenov.task4.model.entity.ItemType;
 import by.epam.javatraining.aksenov.task4.model.entity.SimpleItem;
-import by.epam.javatraining.aksenov.task4.util.Parser;
+import by.epam.javatraining.aksenov.task4.model.logic.TextHandler;
+import by.epam.javatraining.aksenov.task4.model.logic.Parser;
 import org.apache.log4j.Logger;
 
 public class TextSeparator implements Separator {
@@ -23,7 +24,7 @@ public class TextSeparator implements Separator {
         for (String paragraph : paragraphsArr) {
             Item par;
 
-            if (!Parser.isCodeBlock(paragraph)) {
+            if (!TextHandler.isCodeBlock(paragraph)) {
                 par = new CompositeItem(paragraph, ItemType.PARAGRAPH);
                 paragraphSeparator.separate((CompositeItem) par);
             } else {

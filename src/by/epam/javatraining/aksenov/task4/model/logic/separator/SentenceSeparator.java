@@ -4,7 +4,7 @@ import by.epam.javatraining.aksenov.task4.model.entity.CompositeItem;
 import by.epam.javatraining.aksenov.task4.model.entity.Item;
 import by.epam.javatraining.aksenov.task4.model.entity.ItemType;
 import by.epam.javatraining.aksenov.task4.model.entity.SimpleItem;
-import by.epam.javatraining.aksenov.task4.util.Parser;
+import by.epam.javatraining.aksenov.task4.model.logic.Parser;
 import org.apache.log4j.Logger;
 
 import java.util.regex.Pattern;

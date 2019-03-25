@@ -2,7 +2,7 @@ package by.epam.javatraining.aksenov.task4.model.logic.separator;
 
 import by.epam.javatraining.aksenov.task4.model.entity.CompositeItem;
 import by.epam.javatraining.aksenov.task4.model.entity.ItemType;
-import by.epam.javatraining.aksenov.task4.util.Parser;
+import by.epam.javatraining.aksenov.task4.model.logic.Parser;
 import org.apache.log4j.Logger;
 
 public class ParagraphSeparator implements Separator{
