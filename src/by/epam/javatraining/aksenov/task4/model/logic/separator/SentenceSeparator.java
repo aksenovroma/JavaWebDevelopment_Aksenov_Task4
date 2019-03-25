@@ -26,26 +26,28 @@ public class SentenceSeparator implements Separator {
     }
 
     public void separate(CompositeItem compositeItem) {
-        String[] sentenceItemArr = Parser.parse(compositeItem.getText(), REGEX_FOR_SENTENCE_ITEMS);
+        if (compositeItem != null) {
+            String[] sentenceItemArr = Parser.parse(compositeItem.getText(), REGEX_FOR_SENTENCE_ITEMS);
 
-        for (String sentItem : sentenceItemArr) {
-            Item item;
+            for (String sentItem : sentenceItemArr) {
+                Item item;
 
-            if (Pattern.matches(REGEX_FOR_PUNCTUATION, sentItem)) {
-                item = new SimpleItem(sentItem, ItemType.PUNCTUATION);
-                log.trace("punctuation has been created");
+                if (Pattern.matches(REGEX_FOR_PUNCTUATION, sentItem)) {
+                    item = new SimpleItem(sentItem, ItemType.PUNCTUATION);
+                    log.trace("punctuation has been created");
 
-            } else if (sentItem.equals(REGEX_FOR_SPACE_1) || sentItem.equals(REGEX_FOR_SPACE_2)) {
-                item = new SimpleItem(REGEX_FOR_SPACE_2, ItemType.SPACE);
-                log.trace("space has been created");
+                } else if (sentItem.equals(REGEX_FOR_SPACE_1) || sentItem.equals(REGEX_FOR_SPACE_2)) {
+                    item = new SimpleItem(REGEX_FOR_SPACE_2, ItemType.SPACE);
+                    log.trace("space has been created");
+                }
+
+                else {
+                    item = new SimpleItem(sentItem, ItemType.WORD);
+                    log.trace("word has been created");
+                }
+
+                compositeItem.get().add(item);
             }
-
-            else {
-                item = new SimpleItem(sentItem, ItemType.WORD);
-                log.trace("word has been created");
-            }
-
-            compositeItem.get().add(item);
         }
     }
 }

@@ -15,14 +15,16 @@ public class ParagraphSeparator implements Separator{
     }
 
     public void separate(CompositeItem compositeItem) {
-        String[] sentencesArr = Parser.parse(compositeItem.getText(), REGEX_FOR_SENTENCES);
-        SentenceSeparator sentenceSeparator = new SentenceSeparator();
+        if (compositeItem != null) {
+            String[] sentencesArr = Parser.parse(compositeItem.getText(), REGEX_FOR_SENTENCES);
+            SentenceSeparator sentenceSeparator = new SentenceSeparator();
 
-        for (String sentence : sentencesArr) {
-            CompositeItem sent = new CompositeItem(sentence, ItemType.SENTENCE);
-            sentenceSeparator.separate(sent);
-            log.trace("sentence has been created");
-            compositeItem.get().add(sent);
+            for (String sentence : sentencesArr) {
+                CompositeItem sent = new CompositeItem(sentence, ItemType.SENTENCE);
+                sentenceSeparator.separate(sent);
+                log.trace("sentence has been created");
+                compositeItem.get().add(sent);
+            }
         }
     }
 }

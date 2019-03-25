@@ -18,21 +18,23 @@ public class TextSeparator implements Separator {
     }
 
     public void separate(CompositeItem compositeItem) {
-        String[] paragraphsArr = Parser.parse(compositeItem.getText(), REGEX_FOR_PARAGRAPH);
-        ParagraphSeparator paragraphSeparator = new ParagraphSeparator();
+        if (compositeItem != null) {
+            String[] paragraphsArr = Parser.parse(compositeItem.getText(), REGEX_FOR_PARAGRAPH);
+            ParagraphSeparator paragraphSeparator = new ParagraphSeparator();
 
-        for (String paragraph : paragraphsArr) {
-            Item par;
+            for (String paragraph : paragraphsArr) {
+                Item par;
 
-            if (!TextHandler.isCodeBlock(paragraph)) {
-                par = new CompositeItem(paragraph, ItemType.PARAGRAPH);
-                paragraphSeparator.separate((CompositeItem) par);
-            } else {
-                par = new SimpleItem(paragraph, ItemType.CODE_BLOCK);
+                if (!TextHandler.isCodeBlock(paragraph)) {
+                    par = new CompositeItem(paragraph, ItemType.PARAGRAPH);
+                    paragraphSeparator.separate((CompositeItem) par);
+                } else {
+                    par = new SimpleItem(paragraph, ItemType.CODE_BLOCK);
+                }
+
+                log.trace("paragraph has been created");
+                compositeItem.get().add(par);
             }
-
-            log.trace("paragraph has been created");
-            compositeItem.get().add(par);
         }
     }
 }
