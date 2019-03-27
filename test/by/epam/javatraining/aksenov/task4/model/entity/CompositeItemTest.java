@@ -3,12 +3,12 @@ package by.epam.javatraining.aksenov.task4.model.entity;
 import by.epam.javatraining.aksenov.task4.model.exception.logic.CompositeItemWrongListException;
 import by.epam.javatraining.aksenov.task4.model.exception.logic.CompositeItemWrongTextException;
 import by.epam.javatraining.aksenov.task4.model.exception.logic.WrongArgumentException;
-import by.epam.javatraining.aksenov.task4.model.logic.TextHandler;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static by.epam.javatraining.aksenov.task4.model.logic.TextHandlerData.text1;
 import static org.testng.Assert.*;
 
 public class CompositeItemTest {
@@ -174,8 +174,16 @@ public class CompositeItemTest {
     }
 
     @Test
+    public void testClone() {
+        CompositeItem expected = new CompositeItem(text1);
+        CompositeItem actual = expected.clone();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testEquals() {
-        Item compositeItem = TextHandler.clone(compositeItem1);
+        Item compositeItem = compositeItem1.clone();
 
         boolean actual = compositeItem.equals(compositeItem1);
 
@@ -184,7 +192,7 @@ public class CompositeItemTest {
 
     @Test
     public void testEqualsDifferentText() {
-        Item compositeItem = TextHandler.clone(compositeItem1);
+        Item compositeItem = compositeItem1.clone();
         try {
             compositeItem.setText("");
         } catch (WrongArgumentException e) {
@@ -207,7 +215,7 @@ public class CompositeItemTest {
 
     @Test
     public void testEqualsNullPtr() {
-        Item compositeItem = TextHandler.clone(compositeItem1);
+        Item compositeItem = compositeItem1.clone();
 
         boolean actual = compositeItem.equals(null);
 
@@ -234,7 +242,7 @@ public class CompositeItemTest {
 
     @Test
     public void testHashCode() {
-        Item compositeItem = TextHandler.clone(compositeItem1);
+        Item compositeItem = compositeItem1.clone();
 
         boolean actual = (compositeItem.hashCode() == compositeItem1.hashCode());
 
@@ -252,7 +260,7 @@ public class CompositeItemTest {
 
     @Test
     public void testHashCodeDifferentText() {
-        Item compositeItem = TextHandler.clone(compositeItem1);
+        Item compositeItem = compositeItem1.clone();
         try {
             compositeItem.setText("");
         } catch (WrongArgumentException e) {

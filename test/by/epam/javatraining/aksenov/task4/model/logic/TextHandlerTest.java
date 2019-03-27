@@ -13,22 +13,6 @@ import static by.epam.javatraining.aksenov.task4.model.logic.TextHandlerData.*;
 
 public class TextHandlerTest {
     @Test
-    public void testClone() {
-        CompositeItem expected = new CompositeItem(text1);
-        CompositeItem actual = (CompositeItem) TextHandler.clone(expected);
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testCloneNullArgument() {
-        CompositeItem expected = null;
-        CompositeItem actual = (CompositeItem) TextHandler.clone(null);
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
     public void testIndexOfFirstWord() {
         int expected = 0;
         CompositeItem text = new CompositeItem(text2);
@@ -86,28 +70,6 @@ public class TextHandlerTest {
         int actual = TextHandler.indexOfLastWord(sentence);
 
         assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testIsVowel() {
-        Random random = new Random();
-
-        String vowel = "AEIOUaeiou";
-        int index = random.nextInt(vowel.length());
-        boolean actual = TextHandler.isVowel(vowel.charAt(index));
-
-        assertTrue(actual);
-    }
-
-    @Test
-    public void testIsVowelNegative() {
-        Random random = new Random();
-
-        String consonant = "BCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz";
-        int index = random.nextInt(consonant.length());
-        boolean actual = TextHandler.isVowel(consonant.charAt(index));
-
-        assertFalse(actual);
     }
 
     @Test

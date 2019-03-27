@@ -16,4 +16,6 @@ public interface Item extends Serializable {
     ItemType getItemType();
 
     void setText(String text) throws WrongArgumentException;
+
+    Item clone();
 }

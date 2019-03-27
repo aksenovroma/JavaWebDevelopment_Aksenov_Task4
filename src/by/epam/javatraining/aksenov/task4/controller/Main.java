@@ -45,9 +45,9 @@ public class Main {
         }
 
         CompositeItem text = new CompositeItem(textFromFile);
-        CompositeItem textCopy1 = (CompositeItem) TextHandler.clone(text);
-        CompositeItem textCopy2 = (CompositeItem) TextHandler.clone(text);
-        CompositeItem textCopy3 = (CompositeItem) TextHandler.clone(text);
+        CompositeItem textCopy1 = text.clone();
+        CompositeItem textCopy2 = text.clone();
+        CompositeItem textCopy3 = text.clone();
 
         printer.print(text);
 
@@ -59,5 +59,6 @@ public class Main {
 
         TextHandler.reverseAllSentences(textCopy3);
         printer.print(textCopy3);
+
     }
 }

@@ -2,10 +2,10 @@ package by.epam.javatraining.aksenov.task4.model.entity;
 
 import by.epam.javatraining.aksenov.task4.model.exception.logic.SimpleItemWrongTextException;
 import by.epam.javatraining.aksenov.task4.model.exception.logic.WrongArgumentException;
-import by.epam.javatraining.aksenov.task4.model.logic.TextHandler;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static by.epam.javatraining.aksenov.task4.model.logic.TextHandlerData.text1;
 import static org.testng.Assert.*;
 
 public class SimpleItemTest {
@@ -104,8 +104,16 @@ public class SimpleItemTest {
     }
 
     @Test
+    public void testClone() {
+        SimpleItem expected = new SimpleItem(text1, ItemType.WORD);
+        SimpleItem actual = expected.clone();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testEquals() {
-        Item simpleItem = TextHandler.clone(simpleItem1);
+        Item simpleItem = simpleItem1.clone();
 
         boolean actual = simpleItem.equals(simpleItem1);
 
@@ -114,7 +122,7 @@ public class SimpleItemTest {
 
     @Test
     public void testEqualsDifferentText() {
-        Item simpleItem = TextHandler.clone(simpleItem1);
+        Item simpleItem = simpleItem1.clone();
         try {
             simpleItem.setText("");
         } catch (WrongArgumentException e) {
@@ -137,7 +145,7 @@ public class SimpleItemTest {
 
     @Test
     public void testEqualsNullPtr() {
-        Item compositeItem = TextHandler.clone(simpleItem1);
+        Item compositeItem = simpleItem1.clone();
 
         boolean actual = compositeItem.equals(null);
 
@@ -164,7 +172,7 @@ public class SimpleItemTest {
 
     @Test
     public void testHashCode() {
-        Item simpleItem = TextHandler.clone(simpleItem1);
+        Item simpleItem = simpleItem1.clone();
 
         boolean actual = (simpleItem.hashCode() == simpleItem1.hashCode());
 
@@ -182,7 +190,7 @@ public class SimpleItemTest {
 
     @Test
     public void testHashCodeDifferentText() {
-        Item simpleItem = TextHandler.clone(simpleItem1);
+        Item simpleItem = simpleItem1.clone();
         try {
             simpleItem.setText("");
         } catch (WrongArgumentException e) {

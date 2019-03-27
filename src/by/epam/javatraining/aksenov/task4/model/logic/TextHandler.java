@@ -6,7 +6,6 @@ import by.epam.javatraining.aksenov.task4.model.entity.ItemType;
 import by.epam.javatraining.aksenov.task4.model.exception.logic.WrongArgumentException;
 import org.apache.log4j.Logger;
 
-import java.io.*;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -19,8 +18,6 @@ import java.util.List;
 
 public class TextHandler {
     private static Logger log = Logger.getRootLogger();
-
-    public static final String VOWELS = "AEIOUaeiou";
 
     /*6)In each sentence of the text swap the first word with the last,
      without changing the length of the sentence.*/
@@ -104,26 +101,7 @@ public class TextHandler {
         log.info("method reverseAllSentences - completed");
     }
 
-    public static Item clone(Item item) {
-        Item copyItem = null;
 
-        if (item != null) {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-            try (ObjectOutputStream ous = new ObjectOutputStream(baos)) {
-                ous.writeObject(item);
-            } catch (IOException e) {
-                log.error(e);
-            }
-
-            try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()))) {
-                copyItem = (Item) ois.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                log.error(e);
-            }
-        }
-        return copyItem;
-    }
 
     public static int indexOfFirstWord(Item sentence) {
         if (sentence != null) {
@@ -154,13 +132,9 @@ public class TextHandler {
     public static boolean isSuitableWord(Item item, int length) {
         if (item != null) {
             String word = item.getText();
-            return word.length() == length && isVowel(word.charAt(0));
+            return word.length() == length && CharacterHandler.isVowel(word.charAt(0));
         }
         return false;
-    }
-
-    public static boolean isVowel(char c) {
-        return VOWELS.indexOf(c) != -1;
     }
 
     public static boolean isCodeBlock(String text) {

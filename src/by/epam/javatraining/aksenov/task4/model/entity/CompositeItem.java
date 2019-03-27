@@ -3,7 +3,9 @@ package by.epam.javatraining.aksenov.task4.model.entity;
 import by.epam.javatraining.aksenov.task4.model.exception.logic.CompositeItemWrongListException;
 import by.epam.javatraining.aksenov.task4.model.exception.logic.CompositeItemWrongTextException;
 import by.epam.javatraining.aksenov.task4.model.logic.separator.TextSeparator;
+import org.apache.log4j.Logger;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +21,8 @@ public class CompositeItem implements Item {
     public static final String SEPARATOR_FOR_SENTENCE;
     public static final String DEFAULT_TEXT;
     public static final ItemType DEFAULT_ITEM_TYPE;
+
+    private static Logger log = Logger.getRootLogger();
 
     static {
         SEPARATOR_FOR_PARAGRAPH = "\n\n";
@@ -60,7 +64,7 @@ public class CompositeItem implements Item {
         return items;
     }
 
-    public void set(List<Item> items) throws CompositeItemWrongListException{
+    public void set(List<Item> items) throws CompositeItemWrongListException {
         if (items == null) {
             throw new CompositeItemWrongListException();
         }
@@ -82,11 +86,31 @@ public class CompositeItem implements Item {
     }
 
     @Override
-    public void setText(String text) throws CompositeItemWrongTextException{
+    public void setText(String text) throws CompositeItemWrongTextException {
         if (text == null) {
             throw new CompositeItemWrongTextException();
         }
         this.text = text;
+    }
+
+    public CompositeItem clone() {
+        CompositeItem copyItem = null;
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        try (ObjectOutputStream ous = new ObjectOutputStream(baos)) {
+            ous.writeObject(this);
+        } catch (IOException e) {
+            log.error(e);
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()))) {
+            copyItem = (CompositeItem) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            log.error(e);
+        }
+
+        return copyItem;
     }
 
     @Override
