@@ -20,7 +20,6 @@ import java.util.List;
 public class TextHandler {
     private static Logger log = Logger.getRootLogger();
 
-    public static final String REGEX_FOR_CODE_BLOCK = "";
     public static final String VOWELS = "AEIOUaeiou";
 
     /*6)In each sentence of the text swap the first word with the last,
@@ -166,7 +165,7 @@ public class TextHandler {
 
     public static boolean isCodeBlock(String text) {
         if (text != null) {
-            return text.contains(";") && text.contains("=");
+            return text.contains(";") && (text.contains("=") || (text.contains("(") && text.contains(")")));
         }
         return false;
     }
