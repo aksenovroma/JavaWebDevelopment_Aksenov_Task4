@@ -101,8 +101,6 @@ public class TextHandler {
         log.info("method reverseAllSentences - completed");
     }
 
-
-
     public static int indexOfFirstWord(Item sentence) {
         if (sentence != null) {
             List<Item> itemList = ((CompositeItem) sentence).get();

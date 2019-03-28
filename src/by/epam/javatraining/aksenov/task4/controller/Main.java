@@ -29,7 +29,7 @@ import org.apache.log4j.Logger;
 public class Main {
     private static Logger log = Logger.getRootLogger();
 
-    private static final String INPUT_FILE = "input/textExample.txt";
+    private static final String INPUT_FILE = "input/textExample1.txt";
     private static final String OUTPUT_FILE = "output/outputFile.txt";
 
     public static void main(String[] args) {
@@ -45,6 +45,7 @@ public class Main {
         }
 
         CompositeItem text = new CompositeItem(textFromFile);
+
         CompositeItem textCopy1 = text.clone();
         CompositeItem textCopy2 = text.clone();
         CompositeItem textCopy3 = text.clone();
