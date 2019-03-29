@@ -1,10 +1,10 @@
-package by.epam.javatraining.aksenov.task4.model.logic.separator;
+package by.epam.javatraining.aksenov.task4.model.logic.parser;
 
 import by.epam.javatraining.aksenov.task4.model.entity.CompositeItem;
 import by.epam.javatraining.aksenov.task4.model.entity.Item;
 import by.epam.javatraining.aksenov.task4.model.entity.ItemType;
 import by.epam.javatraining.aksenov.task4.model.entity.SimpleItem;
-import by.epam.javatraining.aksenov.task4.model.logic.Parser;
+import by.epam.javatraining.aksenov.task4.model.logic.Separator;
 import org.apache.log4j.Logger;
 
 import java.util.regex.Pattern;
@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  * @date 24.03.2019
  */
 
-public class SentenceSeparator implements Separator {
+public class SentenceParser implements Parser {
     private static final Logger log = Logger.getRootLogger();
 
     public static final String REGEX_FOR_PUNCTUATION;
@@ -31,9 +31,9 @@ public class SentenceSeparator implements Separator {
         REGEX_FOR_SPACE_2 = " ";
     }
 
-    public void separate(CompositeItem compositeItem) {
+    public void parse(CompositeItem compositeItem) {
         if (compositeItem != null) {
-            String[] sentenceItemArr = Parser.parse(compositeItem.getText(), REGEX_FOR_SENTENCE_ITEMS);
+            String[] sentenceItemArr = Separator.separate(compositeItem.getText(), REGEX_FOR_SENTENCE_ITEMS);
 
             for (String sentItem : sentenceItemArr) {
                 Item item;
@@ -41,13 +41,10 @@ public class SentenceSeparator implements Separator {
                 if (Pattern.matches(REGEX_FOR_PUNCTUATION, sentItem)) {
                     item = new SimpleItem(sentItem, ItemType.PUNCTUATION);
                     log.trace("punctuation has been created");
-
                 } else if (sentItem.equals(REGEX_FOR_SPACE_1) || sentItem.equals(REGEX_FOR_SPACE_2)) {
                     item = new SimpleItem(REGEX_FOR_SPACE_2, ItemType.SPACE);
                     log.trace("space has been created");
-                }
-
-                else {
+                } else {
                     item = new SimpleItem(sentItem, ItemType.WORD);
                     log.trace("word has been created");
                 }

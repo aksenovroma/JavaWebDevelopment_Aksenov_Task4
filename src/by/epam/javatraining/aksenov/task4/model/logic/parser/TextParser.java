@@ -1,11 +1,11 @@
-package by.epam.javatraining.aksenov.task4.model.logic.separator;
+package by.epam.javatraining.aksenov.task4.model.logic.parser;
 
 import by.epam.javatraining.aksenov.task4.model.entity.CompositeItem;
 import by.epam.javatraining.aksenov.task4.model.entity.Item;
 import by.epam.javatraining.aksenov.task4.model.entity.ItemType;
 import by.epam.javatraining.aksenov.task4.model.entity.SimpleItem;
 import by.epam.javatraining.aksenov.task4.model.logic.TextHandler;
-import by.epam.javatraining.aksenov.task4.model.logic.Parser;
+import by.epam.javatraining.aksenov.task4.model.logic.Separator;
 import org.apache.log4j.Logger;
 
 /**
@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
  * @date 24.03.2019
  */
 
-public class TextSeparator implements Separator {
+public class TextParser implements Parser {
     private static final Logger log = Logger.getRootLogger();
 
     public static final String REGEX_FOR_PARAGRAPH;
@@ -23,17 +23,24 @@ public class TextSeparator implements Separator {
         REGEX_FOR_PARAGRAPH = "\\n{2,}";
     }
 
-    public void separate(CompositeItem compositeItem) {
+    private Parser nextParser = new ParagraphParser();
+
+    public void setNextParser(Parser nextParser) {
+        if (nextParser != null) {
+            this.nextParser = nextParser;
+        }
+    }
+
+    public void parse(CompositeItem compositeItem) {
         if (compositeItem != null) {
-            String[] paragraphsArr = Parser.parse(compositeItem.getText(), REGEX_FOR_PARAGRAPH);
-            ParagraphSeparator paragraphSeparator = new ParagraphSeparator();
+            String[] paragraphsArr = Separator.separate(compositeItem.getText(), REGEX_FOR_PARAGRAPH);
 
             for (String paragraph : paragraphsArr) {
                 Item par;
 
                 if (!TextHandler.isCodeBlock(paragraph)) {
                     par = new CompositeItem(paragraph, ItemType.PARAGRAPH);
-                    paragraphSeparator.separate((CompositeItem) par);
+                    nextParser.parse((CompositeItem) par);
                 } else {
                     par = new SimpleItem(paragraph, ItemType.CODE_BLOCK);
                 }

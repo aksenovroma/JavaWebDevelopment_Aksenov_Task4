@@ -6,8 +6,6 @@ import by.epam.javatraining.aksenov.task4.model.entity.ItemType;
 import by.epam.javatraining.aksenov.task4.model.entity.SimpleItem;
 import org.testng.annotations.Test;
 
-import java.util.Random;
-
 import static org.testng.Assert.*;
 import static by.epam.javatraining.aksenov.task4.model.logic.TextHandlerData.*;
 
@@ -16,6 +14,7 @@ public class TextHandlerTest {
     public void testIndexOfFirstWord() {
         int expected = 0;
         CompositeItem text = new CompositeItem(text2);
+        text.parse();
         CompositeItem paragraph = (CompositeItem) text.get().get(0);
         CompositeItem sentence = (CompositeItem) paragraph.get().get(0);
         int actual = TextHandler.indexOfFirstWord(sentence);
@@ -35,6 +34,7 @@ public class TextHandlerTest {
     public void testIndexOfFirstWordTextWithoutWords() {
         int expected = -1;
         CompositeItem text = new CompositeItem(text3);
+        text.parse();
         CompositeItem paragraph = (CompositeItem) text.get().get(0);
         CompositeItem sentence = (CompositeItem) paragraph.get().get(0);
         int actual = TextHandler.indexOfFirstWord(sentence);
@@ -46,6 +46,7 @@ public class TextHandlerTest {
     public void testIndexOfLastWord() {
         int expected = 8;
         CompositeItem text = new CompositeItem(text2);
+        text.parse();
         CompositeItem paragraph = (CompositeItem) text.get().get(0);
         CompositeItem sentence = (CompositeItem) paragraph.get().get(0);
         int actual = TextHandler.indexOfLastWord(sentence);
@@ -65,6 +66,7 @@ public class TextHandlerTest {
     public void testIndexOfLastWordTextWithoutWords() {
         int expected = -1;
         CompositeItem text = new CompositeItem(text3);
+        text.parse();
         CompositeItem paragraph = (CompositeItem) text.get().get(0);
         CompositeItem sentence = (CompositeItem) paragraph.get().get(0);
         int actual = TextHandler.indexOfLastWord(sentence);
@@ -145,6 +147,7 @@ public class TextHandlerTest {
     @Test
     public void testSwapFirstLastWordInAllSentence() {
         CompositeItem text = new CompositeItem(text4);
+        text.parse();
         TextHandler.swapFirstLastWordInAllSentence(text);
 
         String expected = text5;
@@ -156,6 +159,7 @@ public class TextHandlerTest {
     @Test
     public void testSwapFirstLastWordInAllSentenceNullArgument() {
         CompositeItem text = new CompositeItem(text4);
+        text.parse();
         TextHandler.swapFirstLastWordInAllSentence(null);
 
         String expected = text4;
@@ -167,6 +171,7 @@ public class TextHandlerTest {
     @Test
     public void testRemoveWordsWithFirstVowel() {
         CompositeItem text = new CompositeItem(text4);
+        text.parse();
         TextHandler.removeWordsWithFirstVowel(text, 9);
 
         String expected = text6;
@@ -178,6 +183,7 @@ public class TextHandlerTest {
     @Test
     public void testRemoveWordsWithFirstNullArgument() {
         CompositeItem text = new CompositeItem(text4);
+        text.parse();
         TextHandler.removeWordsWithFirstVowel(null, 9);
 
         String expected = text7;
@@ -189,6 +195,7 @@ public class TextHandlerTest {
     @Test
     public void testRemoveWordsWithFirstWrongLength() {
         CompositeItem text = new CompositeItem(text4);
+        text.parse();
         TextHandler.removeWordsWithFirstVowel(text, -9);
 
         String expected = text7;
@@ -200,6 +207,7 @@ public class TextHandlerTest {
     @Test
     public void testReverseAllSentences() {
         CompositeItem text = new CompositeItem(text4);
+        text.parse();
         TextHandler.reverseAllSentences(text);
 
         String expected = text8;
@@ -211,6 +219,7 @@ public class TextHandlerTest {
     @Test
     public void testReverseAllSentencesNullArgument() {
         CompositeItem text = new CompositeItem(text4);
+        text.parse();
         TextHandler.reverseAllSentences(null);
 
         String expected = text7;

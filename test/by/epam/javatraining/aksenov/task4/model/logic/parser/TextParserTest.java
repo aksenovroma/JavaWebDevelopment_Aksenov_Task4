@@ -1,17 +1,19 @@
-package by.epam.javatraining.aksenov.task4.model.logic.separator;
+package by.epam.javatraining.aksenov.task4.model.logic.parser;
 
 import by.epam.javatraining.aksenov.task4.model.entity.CompositeItem;
 import by.epam.javatraining.aksenov.task4.model.entity.Item;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.*;
 
-public class SentenceSeparatorTest {
+public class TextParserTest {
 
     @Test
     public void testSeparator() {
-        String text1 = "Autoboxing,    is the automatic conversion.\n\n";
+        String text1 = "Autoboxing is the automatic conversion.\n\n" +
+                "If you.\n\n";
         CompositeItem text = new CompositeItem(text1);
+        text.parse();
         StringBuilder sb = new StringBuilder();
 
         for (Item cI : text.get()) {

@@ -2,7 +2,10 @@ package by.epam.javatraining.aksenov.task4.model.entity;
 
 import by.epam.javatraining.aksenov.task4.model.exception.logic.CompositeItemWrongListException;
 import by.epam.javatraining.aksenov.task4.model.exception.logic.CompositeItemWrongTextException;
-import by.epam.javatraining.aksenov.task4.model.logic.separator.TextSeparator;
+import by.epam.javatraining.aksenov.task4.model.logic.parser.ParagraphParser;
+import by.epam.javatraining.aksenov.task4.model.logic.parser.Parser;
+import by.epam.javatraining.aksenov.task4.model.logic.parser.SentenceParser;
+import by.epam.javatraining.aksenov.task4.model.logic.parser.TextParser;
 import org.apache.log4j.Logger;
 
 import java.io.*;
@@ -39,7 +42,6 @@ public class CompositeItem implements Item {
         if (text != null) {
             this.text = text;
         }
-        parse();
     }
 
     public CompositeItem(String text, ItemType itemType) {
@@ -72,7 +74,26 @@ public class CompositeItem implements Item {
     }
 
     public void parse() {
-        new TextSeparator().separate(this);
+        Parser parser;
+        switch (itemType) {
+            case TEXT: {
+                parser = new TextParser();
+                ((TextParser) parser).setNextParser(new ParagraphParser());
+                parser.parse(this);
+                break;
+            }
+            case PARAGRAPH: {
+                parser = new ParagraphParser();
+                ((ParagraphParser) parser).setNextParser(new SentenceParser());
+                parser.parse(this);
+                break;
+            }
+            case SENTENCE: {
+                parser = new SentenceParser();
+                parser.parse(this);
+                break;
+            }
+        }
     }
 
     @Override

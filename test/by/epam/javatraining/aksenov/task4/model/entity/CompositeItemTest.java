@@ -113,6 +113,7 @@ public class CompositeItemTest {
 
     @Test
     public void testGetItem() {
+        compositeItem1.parse();
         Item expected = compositeItem1.get().get(0);
         Item actual = compositeItem1.getItem(0);
 
@@ -287,7 +288,9 @@ public class CompositeItemTest {
                 "Autoboxing is the automatic conversion.\n" +
                 "Character ch = 'a';\n\n" +
                 "The rest of the, examples in this section use generics ! If you. \n\n";
-        String actual = new CompositeItem(expected).toString();
+        CompositeItem text = new CompositeItem(expected);
+        text.parse();
+        String actual = text.toString();
 
         assertEquals(expected, actual);
     }
